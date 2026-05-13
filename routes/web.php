@@ -8,72 +8,32 @@ use App\Http\Controllers\SupplierImportExportController;
 
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| LANDING PAGE
-|--------------------------------------------------------------------------
-*/
 
 Route::get('/', function () {
     return view('welcome');
 });
 
-/*
-|--------------------------------------------------------------------------
-| AUTHENTICATED ROUTES
-|--------------------------------------------------------------------------
-*/
-
 Route::middleware('auth')->group(function () {
-
-    /*
-    |--------------------------------------------------------------------------
-    | DASHBOARD
-    |--------------------------------------------------------------------------
-    */
 
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard');
 
-    /*
-    |--------------------------------------------------------------------------
-    | SUPPLIERS
-    |--------------------------------------------------------------------------
-    */
-
+   
     Route::resource(
         'suppliers',
         SupplierController::class
     );
-
-    /*
-    |--------------------------------------------------------------------------
-    | LAYUPS
-    |--------------------------------------------------------------------------
-    */
 
     Route::resource(
         'suppliers.layups',
         CltLayupController::class
     );
 
-    /*
-    |--------------------------------------------------------------------------
-    | LAYERS
-    |--------------------------------------------------------------------------
-    */
-
     Route::resource(
         'suppliers.layups.layers',
         CltLayerController::class
     );
-
-    /*
-    |--------------------------------------------------------------------------
-    | IMPORT EXPORT
-    |--------------------------------------------------------------------------
-    */
 
     Route::get(
         '/suppliers/{supplier}/export',
@@ -85,11 +45,6 @@ Route::middleware('auth')->group(function () {
         [SupplierImportExportController::class, 'import']
     )->name('suppliers.import');
 
-    /*
-    |--------------------------------------------------------------------------
-    | IMPORT CONFLICTS
-    |--------------------------------------------------------------------------
-    */
 
     Route::get(
         '/suppliers/{supplier}/conflicts',
@@ -109,12 +64,6 @@ Route::middleware('auth')->group(function () {
         [SupplierImportExportController::class, 'resolveConflicts']
     )->name('suppliers.conflicts.resolve');
 
-    /*
-    |--------------------------------------------------------------------------
-    | PROFILE
-    |--------------------------------------------------------------------------
-    */
-
     Route::get(
         '/profile',
         [ProfileController::class, 'edit']
@@ -131,10 +80,5 @@ Route::middleware('auth')->group(function () {
     )->name('profile.destroy');
 });
 
-/*
-|--------------------------------------------------------------------------
-| AUTH ROUTES
-|--------------------------------------------------------------------------
-*/
 
 require __DIR__.'/auth.php';

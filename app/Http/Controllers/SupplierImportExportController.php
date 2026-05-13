@@ -9,11 +9,7 @@ use Illuminate\Http\Request;
 
 class SupplierImportExportController extends Controller
 {
-    /*
-    |--------------------------------------------------------------------------
-    | EXPORT ALL LAYUPS
-    |--------------------------------------------------------------------------
-    */
+   
 
     public function export(Supplier $supplier)
     {
@@ -59,12 +55,7 @@ class SupplierImportExportController extends Controller
         );
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | IMPORT LAYUPS
-    |--------------------------------------------------------------------------
-    */
-
+    
     public function import(
         Request $request,
         Supplier $supplier
@@ -81,11 +72,7 @@ class SupplierImportExportController extends Controller
             true
         );
 
-        /*
-        |--------------------------------------------------------------------------
-        | SUPPORT OLD & NEW FORMAT
-        |--------------------------------------------------------------------------
-        */
+     
 
         if (isset($json['layup'])) {
 
@@ -109,12 +96,7 @@ class SupplierImportExportController extends Controller
 
         $conflicts = [];
 
-        /*
-        |--------------------------------------------------------------------------
-        | IMPORT LOOP
-        |--------------------------------------------------------------------------
-        */
-
+      
         foreach ($layupsData as $layupJson) {
 
             $layup = CltLayup::firstOrCreate(
@@ -137,11 +119,7 @@ class SupplierImportExportController extends Controller
                 )
                 ->first();
 
-                /*
-                |--------------------------------------------------------------------------
-                | CONFLICT CHECK
-                |--------------------------------------------------------------------------
-                */
+                
 
                 if ($existingLayer) {
 
@@ -196,11 +174,6 @@ class SupplierImportExportController extends Controller
                     }
                 }
 
-                /*
-                |--------------------------------------------------------------------------
-                | INSERT / UPDATE
-                |--------------------------------------------------------------------------
-                */
 
                 CltLayer::updateOrCreate(
 
@@ -218,12 +191,7 @@ class SupplierImportExportController extends Controller
             }
         }
 
-        /*
-        |--------------------------------------------------------------------------
-        | CONFLICT PAGE
-        |--------------------------------------------------------------------------
-        */
-
+    
         if (count($conflicts)) {
 
             session([
@@ -242,11 +210,6 @@ class SupplierImportExportController extends Controller
         );
     }
 
-    /*
-    |--------------------------------------------------------------------------
-    | RESOLVE CONFLICTS
-    |--------------------------------------------------------------------------
-    */
 
     public function resolveConflicts(
         Request $request,

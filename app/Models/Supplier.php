@@ -1,0 +1,19 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Supplier extends Model
+{
+    protected $fillable = [
+       'name',
+        'email',
+        'address',
+    ];
+
+    public function layups()
+    {
+        return $this->hasMany(CltLayup::class);
+    }
+}
